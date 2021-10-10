@@ -1,0 +1,10 @@
+﻿@model Boolean
+
+@if (!Model)
+{
+    <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Login", "Account")'">Log In</button>
+}
+else
+{
+    <button type="button" class="btn btn-outline-primary" onclick="location.href='@Url.Action("Logout", "Account")'">Log Out</button>
+}

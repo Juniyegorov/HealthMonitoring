@@ -14,11 +14,13 @@ namespace HealthMonitoring.Presentation.WinForms
 {
     public partial class RegisterForm : Form
     {
+        IUserServices _userService;
         public RegisterForm()
         {
             InitializeComponent();
             this._passField.AutoSize = false;
             this._passField.Size = new Size(this._passField.Size.Width, 42);
+            _userService = new UserServices();
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -43,12 +45,11 @@ namespace HealthMonitoring.Presentation.WinForms
 
         private void register_Click(object sender, EventArgs e)
         {
-            IUserServices userService = new UserServices();
             string login = _loginField.Text;
             string password = _passField.Text;
             Action<string> action;
             action = ShowMessage;
-            userService.RegisterUser(login, password, action);
+            _userService.RegisterUser(login, password, action);
         }
         private void authorisationLabel_Click(object sender, EventArgs e)
         {

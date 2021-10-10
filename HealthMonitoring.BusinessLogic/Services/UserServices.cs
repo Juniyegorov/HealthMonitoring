@@ -18,6 +18,7 @@ namespace HealthMonitoring.BusinessLogic.Services
         private HealthMonitoringContext _healthMonitoringContext;
         IMapper _mapper;
 
+        
         public UserServices()
         {
             _healthMonitoringContext = new HealthMonitoringContext();

@@ -29,7 +29,9 @@ namespace HealthMonitoring.Presentation.WebApp
         {
             services.AddControllersWithViews();
             services.AddTransient<IUserServices, UserServices>();
-            services.AddSingleton<LoginViewModel>();
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<UserInformationViewModel>();
+            services.AddTransient<IDishServices, DishServices>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

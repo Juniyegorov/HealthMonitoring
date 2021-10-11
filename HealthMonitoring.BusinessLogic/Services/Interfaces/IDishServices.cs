@@ -14,5 +14,6 @@ namespace HealthMonitoring.BusinessLogic.Services.Interfaces
         List<DishModel> ToList();
         CharacteristicsOfTheDishModel GetDish(int id);
         void EatenDish(EatenDishModel eatenDishModel);
+        List<DishComponentsModel> GetDishComponents(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using HealthMonitoring.DataAccessLayer.Models;
+﻿using HealthMonitoring.DataAccessLayer.DataModels;
+using HealthMonitoring.DataAccessLayer.Models;
 using HealthMonitoring.DataAccessLayer.ParameterModels;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace HealthMonitoring.DataAccessLayer.Repositories.Interfaces
         List<Dish> ToList();
         void EatenDish(EatenDish eatenDish);
         CharacteristicsOfTheDish GetDish(int id);
+        List<DishComponentsDataModel> GetDishComponents(int id);
     }
 }

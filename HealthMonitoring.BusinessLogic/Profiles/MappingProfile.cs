@@ -30,7 +30,8 @@ namespace HealthMonitoring.BusinessLogic.Profiles
             CreateMap<ExerciseDataModel, ExerciseModel>();
             CreateMap<CompletedExercise, CompletedExerciseModel>();
             CreateMap<CompletedExerciseModel, CompletedExercise>();
-            
+            CreateMap<DishComponentsDataModel, DishComponentsModel>();
+            CreateMap<DishComponentsModel, DishComponentsDataModel>();
         }
     }
 }

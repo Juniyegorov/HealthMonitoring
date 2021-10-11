@@ -1,0 +1,39 @@
+﻿@model List<DishViewModel>
+<h1>Dishes list</h1>
+<div class="accordion" id="accordionExample">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@i" aria-expanded="true" aria-controls="collapseOne">
+                    @Model[i].Name (weight = @Model[i].Weight calories = @Model[i].Calories)
+                </button>
+            </h2>
+            <div id="collapse_@i" class="accordion-collapse collapse hide" aria-labelledby="headingOne">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Calories</th>
+                                <th scope="col">Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int j = 0; j < Model[i].Products.Count; j++)
+                            {
+                                <tr>
+                                    <th scope="row">@j</th>
+                                    <td>@Model[i].Products[j].Name</td>
+                                    <td>@Model[i].Products[j].Calories</td>
+                                    <td>@Model[i].Products[j].Weight</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

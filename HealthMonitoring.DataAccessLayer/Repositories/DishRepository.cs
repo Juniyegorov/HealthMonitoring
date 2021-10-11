@@ -1,4 +1,5 @@
-﻿using HealthMonitoring.DataAccessLayer.Models;
+﻿using HealthMonitoring.DataAccessLayer.DataModels;
+using HealthMonitoring.DataAccessLayer.Models;
 using HealthMonitoring.DataAccessLayer.ParameterModels;
 using HealthMonitoring.DataAccessLayer.Repositories.Interfaces;
 using System;
@@ -51,6 +52,19 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
             CharacteristicsOfTheDish dish = _healthMonitoringContext.CharacteristicsOfTheDishes.
                 Where(c => c.DishId == id).FirstOrDefault();
             return dish;
+        }
+        public List<DishComponentsDataModel> GetDishComponents(int id)
+        {
+            var dishComponents = (from c in _healthMonitoringContext.CompositionOfTheDishes
+                     join p in _healthMonitoringContext.Products on c.ProductId equals p.Id
+                     where c.DishId == id
+                     select new DishComponentsDataModel
+                     {
+                         Name = p.Name,
+                         Calories = c.Calories,
+                         Weight = c.Count
+                     }).ToList();
+            return dishComponents;
         }
     }
 }

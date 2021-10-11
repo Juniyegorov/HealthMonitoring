@@ -72,5 +72,16 @@ namespace HealthMonitoring.BusinessLogic.Services
             var mapped = _mapper.Map<CharacteristicsOfTheDishModel>(dish);
             return mapped;
         }
+        public List<DishComponentsModel> GetDishComponents(int id)
+        {
+            List<DishComponentsModel> dishComponents = new List<DishComponentsModel>();
+            var components = _dishRepository.GetDishComponents(id);
+            foreach (var component in components)
+            {
+                var mapped = _mapper.Map<DishComponentsModel>(component);
+                dishComponents.Add(mapped);
+            }
+            return dishComponents;
+        }
     }
 }

@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "User Login";
 }
-
 <div class="row">
     <div class="col-md-6">
         <h1>Local Account Login</h1>
@@ -35,17 +34,17 @@
     <div class="col-md-6">
         <h1>External Login</h1>
         <hr />
-                      <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
-                    <div>
-                            <button type="submit" class="btn btn-primary"
-                                    name="provider" value="Google"
-                                    title="Log in using your Google account">
-                                Google
-                            </button>
-                        
-                    </div>
-                </form>
-            
-        
+        <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+            <div>
+                <button type="submit" class="btn btn-primary"
+                        name="provider" value="Google"
+                        title="Log in using your Google account">
+                    Google
+                </button>
+
+            </div>
+        </form>
+
+
     </div>
 </div>

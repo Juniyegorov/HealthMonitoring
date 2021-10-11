@@ -1,0 +1,12 @@
+﻿@model UserInformationViewModel
+<div class="card" style="width: 19rem;">
+    <img src="/images/user.png" class="card-img-top" alt="">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name @Model.Surname</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Height: @Model.Growth</li>
+            <li class="list-group-item">Weight: @Model.Weight</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Change personal information</a>
+    </div>
+</div>

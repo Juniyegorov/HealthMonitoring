@@ -22,6 +22,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
 
         public IActionResult Index()
         {
+            var a = HttpContext.Request;
             return View();
         }
 

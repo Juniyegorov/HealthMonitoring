@@ -22,14 +22,15 @@ namespace HealthMonitoring.Presentation.WebApp.Models.ViewComponents
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var userInformation = _userServices.GetUserInformation(HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault());
+                var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+                var userInformation = _userServices.GetUserInformation(userLogin);
                 _viewModel.Name = userInformation.Name;
                 _viewModel.Surname = userInformation.Surname;
-                _viewModel.Growth = userInformation.Growth;
+                _viewModel.Height = userInformation.Growth;
                 _viewModel.Weight = userInformation.Weight;
                 return Task.FromResult((IViewComponentResult)View("Default", _viewModel));
             }
-            return Task.FromResult((IViewComponentResult)View("Empty", _viewModel));
+            return Task.FromResult((IViewComponentResult)View("Empty"));
         }
     }
 }

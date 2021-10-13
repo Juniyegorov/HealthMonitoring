@@ -4,9 +4,39 @@
     <div class="card-body">
         <h5 class="card-title">@Model.Name @Model.Surname</h5>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Height: @Model.Growth</li>
+            <li class="list-group-item">Height: @Model.Height</li>
             <li class="list-group-item">Weight: @Model.Weight</li>
         </ul>
-        <a href="#" class="btn btn-primary">Change personal information</a>
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas">
+            Change personal information
+        </button>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvaseLabel">Personal information</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form method="post" asp-controller="Account" asp-action="ChangePersonalInformation">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <input type="text" class="form-control" name="name" value="@Model.Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname:</label>
+                        <input type="text" class="form-control" name="surname" value="@Model.Surname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="weight" class="form-label">Weight:</label>
+                        <input type="number" min="1" class="form-control" name="weight" value="@Model.Weight" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="height" class="form-label">Height:</label>
+                        <input type="number" min="30" class="form-control" name="height" value="@Model.Height" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

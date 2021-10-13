@@ -1,5 +1,4 @@
-﻿using HealthMonitoring.BusinessLogic.Services;
-using HealthMonitoring.BusinessLogic.Services.Interfaces;
+﻿using HealthMonitoring.BusinessLogic.Services.Interfaces;
 using HealthMonitoring.Presentation.WebApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,11 +24,13 @@ namespace HealthMonitoring.Presentation.Web.Controllers
         {
             _userServices = userServices;
         }
+
         [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(LoginViewModel model)
@@ -46,11 +47,11 @@ namespace HealthMonitoring.Presentation.Web.Controllers
                 return View();
             }
         }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
-
             LoginViewModel model = new LoginViewModel
             {
                 ReturnUrl = returnUrl,
@@ -58,6 +59,7 @@ namespace HealthMonitoring.Presentation.Web.Controllers
             };
             return View(model);
         }
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult ExternalLogin(string provider, string returnUrl)
@@ -67,11 +69,13 @@ namespace HealthMonitoring.Presentation.Web.Controllers
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             return new ChallengeResult(provider, properties);
         }
+
         [Authorize]
         public IActionResult ExternalLoginCallback()
         {
             return RedirectToAction("Index", "Home");
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -89,12 +93,33 @@ namespace HealthMonitoring.Presentation.Web.Controllers
             }
             return View(model);
         }
+
         [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
+
+        [HttpPost]
+        public IActionResult ChangePersonalInformation(UserInformationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+                var userInformation = _userServices.GetUserInformation(userLogin);
+
+                userInformation.Name = model.Name;
+                userInformation.Surname = model.Surname;
+                userInformation.Weight = model.Weight;
+                userInformation.Growth = model.Height;
+
+                _userServices.SetUserInformation(userInformation);
+            }
+            
+            return Ok();
+        }
+
         private async Task Authenticate(string userName)
         {
             var claims = new List<Claim>
@@ -104,6 +129,7 @@ namespace HealthMonitoring.Presentation.Web.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
+
         private void AddMessageEror(string message)
         {
             ModelState.AddModelError("", message);

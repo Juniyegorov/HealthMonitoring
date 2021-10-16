@@ -31,6 +31,7 @@ namespace HealthMonitoring.Presentation.WebApp
             services.AddSession();
             services.AddControllersWithViews();
             services.AddTransient<IUserServices, UserServices>();
+            services.AddScoped<IExercisesService, ExercisesService>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<UserInformationViewModel>();
             services.AddTransient<IDishServices, DishServices>();

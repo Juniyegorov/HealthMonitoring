@@ -5,9 +5,7 @@ using HealthMonitoring.BusinessLogic.Services.Interfaces;
 using HealthMonitoring.DataAccessLayer.Models;
 using HealthMonitoring.DataAccessLayer.Repositories;
 using HealthMonitoring.DataAccessLayer.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HealthMonitoring.BusinessLogic.Services
 {

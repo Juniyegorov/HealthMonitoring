@@ -1,0 +1,26 @@
+﻿@model List<ActivitiesViewModel>
+    <form method="post" asp-controller="Account" asp-action="ChangePersonalInformation">
+        <div class="row">
+            <div class="col-md-5">
+                <select class="form-select" aria-label="select" required>
+                    <option selected>Open this select menu</option>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <option value="@(i+1)">@Model[i].Name</option>
+                    }
+                </select>
+                <div class="form-group">
+                    <label for="inputDate">Введите дату:</label>
+                    <input type="date" class="form-control" required>
+                </div>
+                <label for="expendedTime" class="form-label">Expended time(min):</label>
+                <input type="number" class="form-control" id="expendedTime" required min="1">
+                <label for="distance" class="form-label">Distance(m):</label>
+                <input type="number" class="form-control" name="distance" required min="1">
+            </div>
+            <div class="col-md-5">
+                Указаны ограничения по поводу необходимости заполнения личных данных
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+</form>

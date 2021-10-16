@@ -117,7 +117,7 @@ namespace HealthMonitoring.Presentation.Web.Controllers
                 _userServices.SetUserInformation(userInformation);
             }
             
-            return Ok();
+            return NoContent();
         }
 
         private async Task Authenticate(string userName)

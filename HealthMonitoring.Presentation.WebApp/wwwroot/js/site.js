@@ -46,3 +46,49 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Your code to run since DOM is loaded and ready
 });
 /*SideBar*/
+
+
+jQuery(document).ready(function () {
+    var products = [];
+    $("#exerciseInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#exerciseTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $("#productInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#sse *").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $('#product-add-button').click(function () {
+        var product = document.getElementById('prod').value;
+        var weight = document.getElementById('weight').value;
+        if (product != "" && weight != "") {
+            products.push({ Name: product, Weight: weight });
+            $('#sse').append('<li>' + product + '</li>');
+        } else if (weight == "") {
+            alert("Enter product weight");
+        } else {
+            alert("Choose a product");
+        }
+    });
+    $('#create-recept-button').click(function () {
+        var receptname = document.getElementById('receptName').value;
+        if (receptname != "" && products.length > 0) {
+            $.post("/Recept/Create", {
+                products: products,
+                receptName: receptname
+            });
+            alert("Recipe successfully added");
+            window.location.reload();
+        } else if (products.length == 0) {
+            alert("You have't added any products");
+        } else {
+            alert("Typing the recept name");
+        }
+    });
+});

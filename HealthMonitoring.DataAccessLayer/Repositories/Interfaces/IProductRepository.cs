@@ -9,5 +9,7 @@ namespace HealthMonitoring.DataAccessLayer.Repositories.Interfaces
     {
         List<CategoriesOfProductDataModel> GetAllCategories();
         List<ProductDataModel> GetProductsByCategory(string category);
+        List<ProductDataModel> GetAllProducts();
+        List<string> GetAllProductsName();
     }
 }

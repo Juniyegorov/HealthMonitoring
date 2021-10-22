@@ -9,5 +9,7 @@ namespace HealthMonitoring.BusinessLogic.Services.Interfaces
     {
         List<CategoriesOfProductModel> GetAllCategories();
         List<ProductModel> GetProductsByCategory(string category);
+        List<ProductModel> GetAllProducts();
+        List<string> GetAllProductsName();
     }
 }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HealthMonitoring.BusinessLogic.Models
+namespace HealthMonitoring.DataAccessLayer.DataModels
 {
-    public class CompletedExerciseModel
+    public class CompletedExerciseDataModel
     {
-        public string UserLogin { get; set; }
         public string Exercise { get; set; }
         public int ExpendedTime { get; set; }
         public DateTime Date { get; set; }

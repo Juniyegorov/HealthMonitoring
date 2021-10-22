@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HealthMonitoring.BusinessLogic.Models;
+using HealthMonitoring.BusinessLogic.Models.ParameterModels;
 using HealthMonitoring.BusinessLogic.Profiles;
 using HealthMonitoring.BusinessLogic.Services.Interfaces;
 using HealthMonitoring.DataAccessLayer.Models;
@@ -8,6 +9,7 @@ using HealthMonitoring.DataAccessLayer.Repositories;
 using HealthMonitoring.DataAccessLayer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HealthMonitoring.BusinessLogic.Services
@@ -15,12 +17,14 @@ namespace HealthMonitoring.BusinessLogic.Services
     public class DishServices : IDishServices
     {
         private IDishRepository _dishRepository;
+        private IProductRepository _productRepository;
         private HealthMonitoringContext _healthMonitoringContext;
         IMapper _mapper;
 
         public DishServices()
         {
             _healthMonitoringContext = new HealthMonitoringContext();
+            _productRepository = new ProductRepository(_healthMonitoringContext);
             _dishRepository = new DishRepository(_healthMonitoringContext);
             var config = new AutoMapper.MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             var mapper = config.CreateMapper();
@@ -30,6 +34,35 @@ namespace HealthMonitoring.BusinessLogic.Services
         {
             var dish = new CreateDishParameterModel() { Name = dishName };
             _dishRepository.AddDish(dish);
+            _healthMonitoringContext.SaveChanges();
+        }
+        public void AddDish(string dishName, List<CompositionOfTheDishParameterModel> compositionOfTheDishParameterModels)
+        {
+            AddDish(dishName);
+            var dishId = _dishRepository.GetDishId(dishName);
+            var products = _productRepository.GetAllProducts();
+            var charactcharacteristicsOfTheDish = new CharacteristicsOfTheDishModel
+            {
+                DishId = dishId,
+                Calories = 0,
+                Weight = 0
+            };
+            foreach (var prod in compositionOfTheDishParameterModels)
+            {
+                var product = products.Where(p => p.Name == prod.Name).FirstOrDefault();
+                var composition = new CompositionOfTheDish
+                {
+                    DishId = dishId,
+                    Count = prod.Weight,
+                    ProductId = product.Id,
+                    Calories = product.Calories * prod.Weight / 100
+                };
+                charactcharacteristicsOfTheDish.Calories += composition.Calories;
+                charactcharacteristicsOfTheDish.Weight += composition.Count;
+                _dishRepository.AddCompositionOfTheDish(composition);
+            }
+            var mapped = _mapper.Map<CharacteristicsOfTheDish>(charactcharacteristicsOfTheDish);
+            _dishRepository.AddCharacteristicsOfTheDish(mapped);
             _healthMonitoringContext.SaveChanges();
         }
         public void AddCompositionOfTheDish(CompositionOfTheDishModel compositionOfTheDishModel)

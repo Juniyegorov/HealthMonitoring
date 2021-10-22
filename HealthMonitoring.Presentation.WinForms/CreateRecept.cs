@@ -15,9 +15,9 @@ namespace HealthMonitoring.Presentation.WinForms
     {
         private bool _receptIsCreate;
         private string _receptName = string.Empty;
-        private List<CompositionOfTheDishModel> _compositionOfTheDishModelList = new List<CompositionOfTheDishModel>();
+        private List<CompositionOfTheDishModel> _compositionOfTheDishModelList;
         private CharacteristicsOfTheDishModel _characteristicsOfTheDishModel;
-        private ProductServices _productServices = new ProductServices();
+        private ProductServices _productServices;
         private List<CategoriesOfProductModel> _productCategories;
         private List<ProductModel> _products;
         private int _dishId;
@@ -25,6 +25,8 @@ namespace HealthMonitoring.Presentation.WinForms
         public CreateRecept(MainMenu mainMenu)
         {
             InitializeComponent();
+            _productServices = new ProductServices();
+            _compositionOfTheDishModelList = new List<CompositionOfTheDishModel>();
             _productCategories = _productServices.GetAllCategories();
             foreach (var product in _productCategories)
             {

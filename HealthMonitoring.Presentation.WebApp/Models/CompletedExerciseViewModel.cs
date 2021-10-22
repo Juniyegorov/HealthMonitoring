@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HealthMonitoring.BusinessLogic.Models
+namespace HealthMonitoring.Presentation.WebApp.Models
 {
-    public class CompletedExerciseModel
+    public class CompletedExerciseViewModel
     {
-        public string UserLogin { get; set; }
+        [Required]
         public string Exercise { get; set; }
+        [Required]
         public int ExpendedTime { get; set; }
+        [Required]
         public DateTime Date { get; set; }
+        [Required]
         public int DistanceTraveled { get; set; }
+        [Required]
         public int ExpendedCalories { get; set; }
     }
 }

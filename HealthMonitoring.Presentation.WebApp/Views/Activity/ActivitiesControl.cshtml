@@ -1,0 +1,65 @@
+﻿@model ExtendedExerciseViewModel
+<div class="container">
+    <form method="post" asp-controller="Activity" asp-action="ActivitiesControl">
+        <div class="row">
+            <div class="col-md-5">
+                <br />
+                Exercise:
+                <select class="form-select" aria-label="select" name="Exercise" required>
+                    <option selected></option>
+                    @for (int i = 0; i < Model.Exercises.Count; i++)
+                    {
+                        <option value="@Model.Exercises[i].Name">@Model.Exercises[i].Name</option>
+                    }
+                </select>
+                <div class="form-group">
+                    <label for="inputDate">Date:</label>
+                    <input type="date" class="form-control" name="Date" required>
+                </div>
+                <label for="expendedTime" class="form-label">Expended time(min):</label>
+                <input type="number" class="form-control" id="expendedTime" required min="1" name="ExpendedTime">
+                <label for="distance" class="form-label">Distance(m):</label>
+                <input type="number" class="form-control" name="DistanceTraveled" required min="1">
+            </div>
+            <div class="col-md-5">
+                <br />
+                Указаны ограничения по поводу необходимости заполнения личных данных
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    @if (Model.CompletedExercises.Count > 0)
+    {
+        <br />
+        <h2>All activities table</h2>
+        <p>Type something in the input field to search on table:</p>
+        <input class="form-control" id="exerciseInput" type="text" placeholder="Search..">
+        <br />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Exercise</th>
+                    <th scope="col">Expended time(min)</th>
+                    <th scope="col">Distance(m)</th>
+                    <th scope="col">Expended calories</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody id="exerciseTable">
+                @for (int i = 0; i < Model.CompletedExercises.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i+1)</th>
+                        <td>@Model.CompletedExercises[i].Exercise</td>
+                        <td>@Model.CompletedExercises[i].ExpendedTime</td>
+                        <td>@Model.CompletedExercises[i].DistanceTraveled</td>
+                        <td>@Model.CompletedExercises[i].ExpendedCalories</td>
+                        <td>@Model.CompletedExercises[i].Date.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

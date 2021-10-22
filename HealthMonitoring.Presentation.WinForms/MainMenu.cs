@@ -153,10 +153,10 @@ namespace HealthMonitoring.Presentation.WinForms
                         {
                             Date = _exerciseDateTime.Value,
                             DistanceTraveled = distance,
-                            ExerciseId = exerciseId,
+                            Exercise = exercise.ToString(),
                             ExpendedCalories = calories,
                             ExpendedTime = time,
-                            UserId = _userInformation.Id
+                            UserLogin = _user.Login
                         };
                         _services.ExercisesService.AddCompletedExercise(completedExercise);
                         MessageBox.Show("Exercise successfull completed");

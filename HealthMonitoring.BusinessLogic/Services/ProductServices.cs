@@ -47,5 +47,21 @@ namespace HealthMonitoring.BusinessLogic.Services
             }
             return productModels;
         }
+        public List<ProductModel> GetAllProducts()
+        {
+            List<ProductModel> productModels = new List<ProductModel>();
+            var selectProducts = _productRepository.GetAllProducts();
+            foreach (var product in selectProducts)
+            {
+                var mappedProducts = _mapper.Map<ProductModel>(product);
+                productModels.Add(mappedProducts);
+            }
+            return productModels;
+        }
+        public List<string> GetAllProductsName()
+        {
+            var selectProducts = _productRepository.GetAllProductsName();
+            return selectProducts;
+        }
     }
 }

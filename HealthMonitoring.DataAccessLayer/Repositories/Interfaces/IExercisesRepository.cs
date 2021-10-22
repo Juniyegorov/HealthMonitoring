@@ -10,5 +10,7 @@ namespace HealthMonitoring.DataAccessLayer.Repositories.Interfaces
     {
         List<ExerciseDataModel> GetAllExercises();
         void AddCompletedExercise(CompletedExercise completedExercise);
+        List<CompletedExerciseDataModel> AllCompletedExercise(int id);
+        int ExerciseId(string exercise);
     }
 }

@@ -25,6 +25,15 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
 
             _healthMonitoringContext.Dishes.Add(dishEntity);
         }
+        //public void AddDish(string dishName, CompositionOfTheDish compositionOfTheDish)
+        //{
+        //    var dishEntity = new Dish
+        //    {
+        //        Name = dishName
+        //    };
+
+        //    _healthMonitoringContext.Dishes.Add(dishEntity);
+        //}
         public void AddCharacteristicsOfTheDish(CharacteristicsOfTheDish characteristicsOfTheDish)
         {
             _healthMonitoringContext.CharacteristicsOfTheDishes.Add(characteristicsOfTheDish);

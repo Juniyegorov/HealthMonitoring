@@ -40,5 +40,24 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
                                  }).ToList();
             return selectProducts;
         }
+        public List<ProductDataModel> GetAllProducts()
+        {
+            var selectProducts = (from p in _healthMonitoringContext.Products
+                                  join c in _healthMonitoringContext.CategoriesOfProducts on p.CategoryOfProductId equals c.Id
+                                  select new ProductDataModel
+                                  {
+                                      Id = p.Id,
+                                      Calories = p.Calories,
+                                      Name = p.Name,
+                                      Weight = p.Weight,
+                                      CategoryOfProductId = p.CategoryOfProductId
+                                  }).ToList();
+            return selectProducts;
+        }
+        public List<string> GetAllProductsName()
+        {
+            var selectProducts = _healthMonitoringContext.Products.Select(p => p.Name).ToList();
+            return selectProducts;
+        }
     }
 }

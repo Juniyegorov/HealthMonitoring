@@ -9,5 +9,6 @@ namespace HealthMonitoring.BusinessLogic.Services.Interfaces
     {
         List<ExerciseModel> GetAllExercises();
         void AddCompletedExercise(CompletedExerciseModel completedExercise);
+        List<CompletedExerciseModel> AllCompletedExercise(int id);
     }
 }

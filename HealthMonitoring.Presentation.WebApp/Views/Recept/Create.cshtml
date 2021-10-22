@@ -1,0 +1,34 @@
+﻿@model List<string>  
+<div class="row">
+    <div class="col-md-5">
+        <br />
+        <label for="receptName" class="form-label">Name of recept</label>
+        <input type="text" class="form-control" id="receptName" required>
+        Products:
+        <input type="text" list="products" id="prod" class="form-control" required/>
+        <datalist id="products">
+            @foreach (var prod in Model)
+            {
+                <option>@prod</option>
+            }
+        </datalist>
+        <label for="weight" class="form-label">Weight(gr):</label>
+        <input type="number" class="form-control" id="weight" required min="1">
+        <br />
+        <div class="col-sm">
+            <p>
+                <button id="product-add-button" class="btn btn-outline-primary">Add product</button>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <br />
+        Products list:
+        <div class="col-sm">
+            <ul id="sse">
+            </ul>
+        </div>
+    </div>
+</div>
+    <br />
+    <button id="create-recept-button" class="btn btn-outline-primary">Create recept</button>

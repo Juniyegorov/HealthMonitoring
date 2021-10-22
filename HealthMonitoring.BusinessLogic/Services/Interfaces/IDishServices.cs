@@ -1,4 +1,5 @@
 ﻿using HealthMonitoring.BusinessLogic.Models;
+using HealthMonitoring.BusinessLogic.Models.ParameterModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,5 +16,6 @@ namespace HealthMonitoring.BusinessLogic.Services.Interfaces
         CharacteristicsOfTheDishModel GetDish(int id);
         void EatenDish(EatenDishModel eatenDishModel);
         List<DishComponentsModel> GetDishComponents(int id);
+        void AddDish(string dishName, List<CompositionOfTheDishParameterModel> compositionOfTheDishParameterModels);
     }
 }

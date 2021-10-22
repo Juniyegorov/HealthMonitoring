@@ -27,14 +27,14 @@ namespace HealthMonitoring.Presentation.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDistributedMemoryCache();
-            services.AddSession();
             services.AddControllersWithViews();
-            services.AddTransient<IUserServices, UserServices>();
+            services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IExercisesService, ExercisesService>();
-            services.AddTransient<LoginViewModel>();
-            services.AddTransient<UserInformationViewModel>();
-            services.AddTransient<IDishServices, DishServices>();
+            services.AddScoped<LoginViewModel>();
+            services.AddScoped<CaloriesExpensesServices>();
+            services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<UserInformationViewModel>();
+            services.AddScoped<IDishServices, DishServices>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
@@ -59,7 +59,6 @@ namespace HealthMonitoring.Presentation.WebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();

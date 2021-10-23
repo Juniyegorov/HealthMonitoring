@@ -34,6 +34,8 @@ namespace HealthMonitoring.BusinessLogic.Profiles
             CreateMap<CompletedExerciseModel, CompletedExerciseDataModel>();
             CreateMap<DishComponentsDataModel, DishComponentsModel>();
             CreateMap<DishComponentsModel, DishComponentsDataModel>();
+            CreateMap<EatenDishDTO, EatenDishDataModel>();
+            CreateMap<EatenDishDataModel, EatenDishDTO>();
         }
     }
 }

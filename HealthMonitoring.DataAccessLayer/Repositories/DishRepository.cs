@@ -25,15 +25,6 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
 
             _healthMonitoringContext.Dishes.Add(dishEntity);
         }
-        //public void AddDish(string dishName, CompositionOfTheDish compositionOfTheDish)
-        //{
-        //    var dishEntity = new Dish
-        //    {
-        //        Name = dishName
-        //    };
-
-        //    _healthMonitoringContext.Dishes.Add(dishEntity);
-        //}
         public void AddCharacteristicsOfTheDish(CharacteristicsOfTheDish characteristicsOfTheDish)
         {
             _healthMonitoringContext.CharacteristicsOfTheDishes.Add(characteristicsOfTheDish);
@@ -56,6 +47,21 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
         {
             _healthMonitoringContext.EatenDishes.Add(eatenDish);
         }
+        public void EatenDish(string dishName, int weight, DateTime date, int userid)
+        {
+            var dishId = _healthMonitoringContext.Dishes.Where(d => d.Name == dishName).Select(d => d.Id).FirstOrDefault();
+            var dishCharact = _healthMonitoringContext.CharacteristicsOfTheDishes.Where(d => d.DishId == dishId).FirstOrDefault();
+            var calories = dishCharact.Calories * weight / dishCharact.Weight;
+            var dish = new EatenDish
+            {
+                UserId = userid,
+                Date = date,
+                DishId = dishId,
+                Calories = calories,
+                Weight = weight
+            };
+            _healthMonitoringContext.EatenDishes.Add(dish);
+        }
         public CharacteristicsOfTheDish GetDish(int id)
         {
             CharacteristicsOfTheDish dish = _healthMonitoringContext.CharacteristicsOfTheDishes.
@@ -74,6 +80,20 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
                          Weight = c.Count
                      }).ToList();
             return dishComponents;
+        }
+        public List<EatenDishDataModel> EatenDishByUserId(int userId)
+        {
+            var eatenDish = (from e in _healthMonitoringContext.EatenDishes
+                             join d in _healthMonitoringContext.Dishes on e.DishId equals d.Id
+                             where e.UserId == userId
+                             select new EatenDishDataModel
+                             {
+                                 Name = d.Name,
+                                 Calories = e.Calories,
+                                 Date = e.Date,
+                                 Weight = e.Weight
+                             }).ToList();
+            return eatenDish;
         }
     }
 }

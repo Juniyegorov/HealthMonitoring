@@ -99,6 +99,11 @@ namespace HealthMonitoring.BusinessLogic.Services
             _dishRepository.EatenDish(mapped);
             _healthMonitoringContext.SaveChanges();
         }
+        public void EatenDish(string dishName, int weight, DateTime date, int userid)
+        {
+            _dishRepository.EatenDish(dishName, weight, date, userid);
+            _healthMonitoringContext.SaveChanges();
+        }
         public CharacteristicsOfTheDishModel GetDish(int id)
         {
             var dish = _dishRepository.GetDish(id);
@@ -115,6 +120,17 @@ namespace HealthMonitoring.BusinessLogic.Services
                 dishComponents.Add(mapped);
             }
             return dishComponents;
+        }
+        public List<EatenDishDTO> EatenDishByUserId(int userId)
+        {
+            var mapped = new List<EatenDishDTO>();
+            var eatenDishes = _dishRepository.EatenDishByUserId(userId);
+            foreach (var dish in eatenDishes)
+            {
+                var map = _mapper.Map<EatenDishDTO>(dish);
+                mapped.Add(map);
+            }
+            return mapped;
         }
     }
 }

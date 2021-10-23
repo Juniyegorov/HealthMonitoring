@@ -1,0 +1,61 @@
+﻿@model RationControlViewModel
+<div class="container">
+    <form method="post" asp-controller="NutritionMonitoring" asp-action="Control">
+        <div class="row">
+            <div class="col-md-5">
+                <br />
+                Dishes:
+                <select class="form-select" aria-label="select" name="Name" required>
+                    <option selected></option>
+                    @foreach (var dish in Model.DishesName)
+                    {
+                        <option value="@dish">@dish</option>
+                    }
+                </select>
+                <div class="form-group">
+                    <label for="inputDate">Date:</label>
+                    <input type="date" class="form-control" name="Date" required>
+                </div>
+                <label for="Weight" class="form-label">Weight(gr):</label>
+                <input type="number" class="form-control" id="Weight" required min="1" name="Weight">
+            </div>
+            <div class="col-md-5">
+                <br />
+                Указаны ограничения по поводу необходимости заполнения личных данных
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    @if (Model.EatenDishes.Count > 0)
+    {
+        <br />
+        <h2>All activities table</h2>
+        <p>Type something in the input field to search on table:</p>
+        <input class="form-control" id="exerciseInput" type="text" placeholder="Search..">
+        <br />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Weight(gr)</th>
+                    <th scope="col">Calories</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody id="exerciseTable">
+                @for (int i = 0; i < Model.EatenDishes.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i+1)</th>
+                        <td>@Model.EatenDishes[i].Name</td>
+                        <td>@Model.EatenDishes[i].Weight</td>
+                        <td>@Model.EatenDishes[i].Calories</td>
+                        <td>@Model.EatenDishes[i].Date.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -1,8 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+﻿@model Dictionary<int, List<DataPoint>>[]
+    <script type="text/javascript">
+        var model = @Html.Raw(ViewBag.DataPoints);
+    </script>
+    <h3>On this page you can view how mach calories you have spent and consumed over a certain period.</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <br />
+            <div class="row">
+                <div class="col-md-5">
+                    Choose year:
+                </div>
+                <div class="col">
+                    <select class="form-control-sm" aria-label="select" name="yearSelect" id="yearSelect">
+                        <option selected></option>
+                        @foreach (var key in Model[0].Keys)
+                        {
+                            <option value="@key">@key</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+        <div class="col-md-6">
+            <br />
+            <div class="row">
+                <div class="col-md-5">
+                    Choose year:
+                </div>
+                <div class="col">
+                    <select class="form-control-sm" aria-label="select" name="yearSelect" id="yearSelect2">
+                        <option selected></option>
+                        @foreach (var key in Model[1].Keys)
+                        {
+                            <option value="@key">@key</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+        </div>
+            </div>

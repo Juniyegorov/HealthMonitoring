@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HealthMonitoring.Presentation.WebApp.Controllers
@@ -33,7 +34,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
         [HttpPost]
         public IActionResult ActivitiesControl(CompletedExerciseViewModel model)
         {
-            var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+            var userLogin = User.FindFirst(ClaimTypes.Name).Value;
             var userInfo = _userServices.GetUserInformation(userLogin);
 
             if (ModelState.IsValid && userInfo.Name != null)
@@ -55,7 +56,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
         }
         private ExtendedExerciseViewModel CreateExtendedExerciseViewModel()
         {
-            var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+            var userLogin = User.FindFirst(ClaimTypes.Name).Value;
             var allExercises = _exerciseService.GetAllExercises();
 
             var allActivities = new List<ExerciseViewModel>();

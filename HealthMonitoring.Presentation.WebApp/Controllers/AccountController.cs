@@ -71,8 +71,25 @@ namespace HealthMonitoring.Presentation.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult ExternalLoginCallback()
+        public async Task<IActionResult> ExternalLoginCallback()
         {
+            var userName = User.FindFirst(ClaimTypes.Email).Value;
+            var user = _userServices.CheckUser(userName, "0");
+
+            LoginViewModel model = new LoginViewModel
+            {
+                UserName = userName,
+                Password = "0"
+            };
+
+            if (!user)
+            {
+                await Register(model);
+            }
+            else
+            {
+                await Login(model);
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -106,7 +123,7 @@ namespace HealthMonitoring.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+                var userLogin = User.FindFirst(ClaimTypes.Name).Value;
                 var userInformation = _userServices.GetUserInformation(userLogin);
 
                 userInformation.Name = model.Name;
@@ -124,7 +141,7 @@ namespace HealthMonitoring.Presentation.Web.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim("Login", userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));

@@ -22,7 +22,8 @@ namespace HealthMonitoring.Presentation.WebApp.Models.ViewComponents
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+                var userLogin = User.Identity.Name;
+                
                 var userInformation = _userServices.GetUserInformation(userLogin);
                 _viewModel.Name = userInformation.Name;
                 _viewModel.Surname = userInformation.Surname;

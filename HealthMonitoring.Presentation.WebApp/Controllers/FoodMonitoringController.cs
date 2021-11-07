@@ -5,16 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace HealthMonitoring.Presentation.WebApp.Controllers
 {
     [Authorize]
-    public class NutritionMonitoringController : Controller
+    public class FoodMonitoringController : Controller
     {
         private IDishServices _dishServices;
         private IUserServices _userServices;
-        public NutritionMonitoringController(IUserServices userServices, IDishServices dishServices)
+        public FoodMonitoringController(IUserServices userServices, IDishServices dishServices)
         {
             _dishServices = dishServices;
             _userServices = userServices;
@@ -23,7 +24,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
         public IActionResult Control()
         {
             var dishes = _dishServices.ToList();            
-            var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+            var userLogin = User.FindFirst(ClaimTypes.Name).Value;
             var userInfo = _userServices.GetUserInformation(userLogin);
             var eatenDish = _dishServices.EatenDishByUserId(userInfo.Id);
 
@@ -49,10 +50,10 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
         [HttpPost]
         public IActionResult Control(EatenDishViewModel model)
         {
-            var userLogin = HttpContext.User.Claims.Where(u => u.Type == "Login").Select(u => u.Value).FirstOrDefault();
+            var userLogin = User.FindFirst(ClaimTypes.Name).Value;
             var userInfo = _userServices.GetUserInformation(userLogin);
             _dishServices.EatenDish(model.Name, model.Weight, model.Date, userInfo.Id);
-            return RedirectToAction("Control");
+            return RedirectToAction("Control", "FoodMonitoring");
         }
     }
 }

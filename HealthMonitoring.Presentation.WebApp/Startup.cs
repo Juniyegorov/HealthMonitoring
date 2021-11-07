@@ -34,6 +34,7 @@ namespace HealthMonitoring.Presentation.WebApp
             services.AddScoped<CaloriesExpensesServices>();
             services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<UserInformationViewModel>();
+            services.AddScoped<CaloriesService>();
             services.AddScoped<IDishServices, DishServices>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

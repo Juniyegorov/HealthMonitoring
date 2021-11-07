@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // Your code to run since DOM is loaded and ready
 });
-/*SideBar*/
 
 
 jQuery(document).ready(function () {
@@ -91,4 +90,44 @@ jQuery(document).ready(function () {
             alert("Typing the recept name");
         }
     });
+
+    $('#yearSelect').change(function () {
+        debugger;
+        var year = document.getElementById('yearSelect').value;
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "dark1", "dark2"
+            exportEnabled: false,
+            title: {
+                text: "Received calories in " + year
+            },
+            data: [{
+                type: "column",
+                dataPoints: model[0][year]
+            }]
+        });
+        chart.render();
+    });
+    $('#yearSelect2').change(function () {
+        debugger;
+        var year = document.getElementById('yearSelect2').value;
+        var chart = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "dark1", "dark2"
+            exportEnabled: false,
+            title: {
+                text: "Expended calories in " +  year
+            },
+            data: [{
+                type: "column",
+                dataPoints: model[1][year]
+            }]
+        });
+        chart.render();
+    });
+        
+        
+    /*});*/
 });
+
+

@@ -122,5 +122,39 @@ namespace HealthMonitoring.BusinessLogic.Services
             }
             return calories;
         }
+        public List<GroupCaloriesDTO> GetAllReceivedCaloriesDate(int userId)
+        {
+            DateTime dateTime = DateTime.Now;
+            var receivedCalories = _caloriesRepository.GetAllReceivedCalories(userId);
+            var groups = (from u in receivedCalories
+                          orderby u.Date
+                          group u by new { u.Date.Month, u.Date.Year } into g
+                          select new GroupCaloriesDTO
+                          {
+                              Month = g.Key.Month,
+                              Year = g.Key.Year,
+                              Calories = g.Sum(c => c.ReceivedCalories)
+                          }
+                          ).ToList();
+
+            return groups;
+        }
+        public List<GroupCaloriesDTO> GetAllExpendedCaloriesDate(int userId)
+        {
+            DateTime dateTime = DateTime.Now;
+            var receivedCalories = _caloriesRepository.GetAllExpendedCalories(userId);
+            var groups = (from u in receivedCalories
+                          orderby u.Date
+                          group u by new { u.Date.Month, u.Date.Year } into g
+                          select new GroupCaloriesDTO
+                          {
+                              Month = g.Key.Month,
+                              Year = g.Key.Year,
+                              Calories = g.Sum(c => c.ExpendedCalories)
+                          }
+                          ).ToList();
+
+            return groups;
+        }
     }
 }

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthMonitoring.BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthMonitoring.Presentation.WinForms", "HealthMonitoring.Presentation.WinForms\HealthMonitoring.Presentation.WinForms.csproj", "{016D11DC-FD39-4365-9FBD-9C8442160B57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthMonitoring.Presentation.WebApp", "HealthMonitoring.Presentation.WebApp\HealthMonitoring.Presentation.WebApp.csproj", "{06456EA5-58A7-4856-A1EA-4B986195BB19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthMonitoring.Presentation.WebApp", "HealthMonitoring.Presentation.WebApp\HealthMonitoring.Presentation.WebApp.csproj", "{06456EA5-58A7-4856-A1EA-4B986195BB19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthMonitoring.Presentation.WebAPI", "HealthMonitoring.Presentation.WebAPI\HealthMonitoring.Presentation.WebAPI.csproj", "{DBA8FAF4-043F-4DFA-A35A-D7BE10FC2B6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{06456EA5-58A7-4856-A1EA-4B986195BB19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06456EA5-58A7-4856-A1EA-4B986195BB19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06456EA5-58A7-4856-A1EA-4B986195BB19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA8FAF4-043F-4DFA-A35A-D7BE10FC2B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA8FAF4-043F-4DFA-A35A-D7BE10FC2B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA8FAF4-043F-4DFA-A35A-D7BE10FC2B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA8FAF4-043F-4DFA-A35A-D7BE10FC2B6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

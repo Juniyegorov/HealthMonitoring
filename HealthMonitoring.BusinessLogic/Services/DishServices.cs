@@ -30,40 +30,44 @@ namespace HealthMonitoring.BusinessLogic.Services
             var mapper = config.CreateMapper();
             _mapper = mapper;
         }
+
         public void AddDish(string dishName)
         {
             var dish = new CreateDishParameterModel() { Name = dishName };
             _dishRepository.AddDish(dish);
             _healthMonitoringContext.SaveChanges();
         }
+
         public void AddDish(string dishName, List<CompositionOfTheDishParameterModel> compositionOfTheDishParameterModels)
         {
-            AddDish(dishName);
-            var dishId = _dishRepository.GetDishId(dishName);
             var products = _productRepository.GetAllProducts();
+            var dishComposition = new List<CompositionOfTheDish>();
             var charactcharacteristicsOfTheDish = new CharacteristicsOfTheDishModel
             {
-                DishId = dishId,
                 Calories = 0,
                 Weight = 0
             };
+
             foreach (var prod in compositionOfTheDishParameterModels)
             {
                 var product = products.Where(p => p.Name == prod.Name).FirstOrDefault();
                 var composition = new CompositionOfTheDish
                 {
-                    DishId = dishId,
                     Count = prod.Weight,
                     ProductId = product.Id,
                     Calories = product.Calories * prod.Weight / 100
                 };
                 charactcharacteristicsOfTheDish.Calories += composition.Calories;
                 charactcharacteristicsOfTheDish.Weight += composition.Count;
-                _dishRepository.AddCompositionOfTheDish(composition);
+                dishComposition.Add(composition);
             }
-            var mapped = _mapper.Map<CharacteristicsOfTheDish>(charactcharacteristicsOfTheDish);
-            _dishRepository.AddCharacteristicsOfTheDish(mapped);
-            _healthMonitoringContext.SaveChanges();
+            var mappedCharact = _mapper.Map<CharacteristicsOfTheDish>(charactcharacteristicsOfTheDish);
+
+            if (dishComposition.Count > 0)
+            {
+                _dishRepository.CreateDish(dishName, mappedCharact, dishComposition);
+                _healthMonitoringContext.SaveChanges();
+            }
         }
         public void AddCompositionOfTheDish(CompositionOfTheDishModel compositionOfTheDishModel)
         {

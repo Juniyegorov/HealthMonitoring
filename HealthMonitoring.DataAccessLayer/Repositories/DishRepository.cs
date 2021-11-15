@@ -95,5 +95,20 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
                              }).ToList();
             return eatenDish;
         }
+
+        public void CreateDish(string dishName, CharacteristicsOfTheDish characteristicsOfTheDish, List<CompositionOfTheDish> compositionOfTheDish)
+        {
+            var dish = new Dish
+            {
+                Name = dishName
+            };
+            _healthMonitoringContext.Dishes.Add(dish);
+            dish.CharacteristicsOfTheDishes.Add(characteristicsOfTheDish);
+            foreach (var compisition in compositionOfTheDish)
+            {
+                dish.CompositionOfTheDishes.Add(compisition);
+            }
+            
+        }
     }
 }

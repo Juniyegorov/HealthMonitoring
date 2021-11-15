@@ -28,6 +28,11 @@ namespace HealthMonitoring.Presentation.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options => options.AddPolicy("Allow", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod())
+               );
             services.AddScoped<IExercisesService, ExercisesService>();
             services.AddScoped<IUserServices, UserServices>();
 
@@ -43,6 +48,12 @@ namespace HealthMonitoring.Presentation.WebAPI
             }
 
             app.UseRouting();
+
+            app.UseCors("Allow");
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             app.UseAuthentication();
 

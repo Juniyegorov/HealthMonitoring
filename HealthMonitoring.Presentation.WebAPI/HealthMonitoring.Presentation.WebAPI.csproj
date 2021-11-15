@@ -8,5 +8,9 @@
     <ProjectReference Include="..\HealthMonitoring.BusinessLogic\HealthMonitoring.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 
 </Project>

@@ -34,7 +34,7 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
                     Authenticate(model.Login);
                     return Ok();
                 }
-                ModelState.AddModelError("", "Incorrect login and (or) password");
+                ModelState.AddModelError("msg", "Incorrect login and (or) password");
                 return BadRequest(ModelState);
             }
             else

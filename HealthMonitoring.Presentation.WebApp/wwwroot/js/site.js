@@ -64,15 +64,24 @@ jQuery(document).ready(function () {
     });
 
     $('#product-add-button').click(function () {
+        var select = document.getElementById('products');
+        var selectCount = select.children.length;
+        const pp = [];
+        for (var i = 0; i < selectCount; i++) {
+            pp.push(select.children[i].value);
+        }
+        
         var product = document.getElementById('prod').value;
         var weight = document.getElementById('weight').value;
-        if (product != "" && weight != "") {
+        var isIncludProduct = pp.includes(product);
+
+        if (weight != "" && isIncludProduct) {
             products.push({ Name: product, Weight: weight });
             $('#sse').append('<li>' + product + '</li>');
         } else if (weight == "") {
             alert("Enter product weight");
         } else {
-            alert("Choose a product");
+            alert("Choose a product from the list");
         }
     });
     $('#create-recept-button').click(function () {

@@ -19,5 +19,6 @@ namespace HealthMonitoring.DataAccessLayer.Repositories.Interfaces
         CharacteristicsOfTheDish GetDish(int id);
         List<DishComponentsDataModel> GetDishComponents(int id);
         List<EatenDishDataModel> EatenDishByUserId(int userId);
+        void CreateDish(string dishName, CharacteristicsOfTheDish characteristicsOfTheDish, List<CompositionOfTheDish> compositionOfTheDish);
     }
 }

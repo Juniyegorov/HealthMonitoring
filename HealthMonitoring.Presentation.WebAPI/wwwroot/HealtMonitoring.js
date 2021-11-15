@@ -26,8 +26,15 @@ function openLoginModal() {
     setTimeout(function () {
         $('#loginModal').modal('show');
     }, 230);
-
 }
+
+function closeLoginModal() {
+    showLoginForm();
+    setTimeout(function () {
+        $('#loginModal').modal('hide');
+    }, 230);
+}
+
 function openRegisterModal() {
     showRegisterForm();
     setTimeout(function () {
@@ -37,46 +44,181 @@ function openRegisterModal() {
 }
 
 function loginRequest() {
-    const url = "http://localhost:47109/Account/Login/";
-    const data = {
-        'login': document.getElementById('login').value,
-        'password': document.getElementById('password').value
-    };
+    var loginButton = document.getElementById('loginButton');
+    var logoutButton = document.getElementById('logoutButton');
 
+    var url = "http://localhost:47109/Account/Login";
+    const data = {
+        Login: document.getElementById('login').value,
+        Password: document.getElementById('password').value
+    };
     console.log(JSON.stringify(data))
     fetch(url, {
         method: "POST",
         headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-        .then(response => response.json())
-        .then(data => window.location.replace(data))
-        .catch(error => console.error("error"));
+        .then(response => {
+            if (response.ok) {
+                loginButton.style.display = 'none';
+                logoutButton.style.display = '';
+                closeLoginModal();
+            } else {
+                response.json().then(data => shakeModal(data.msg));
+            }
+        })
+        .catch(error => shakeModal(error));
 }
 
+function logoutRequest() {
+    var loginButton = document.getElementById('loginButton');
+    var logoutButton = document.getElementById('logoutButton');
 
+    var url = "http://localhost:47109/Account/Logout";
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                loginButton.style.display = '';
+                logoutButton.style.display = 'none';
+            }
+        })
+        .catch(error => alert(error));
+}
 
 function registerRequest() {
-    /*   Remove this comments when moving to server
-    $.post( "/login", function( data ) {
-            if(data == 1){
-                window.location.replace("/home");            
-            } else {
-                 shakeModal(); 
-            }
-        });
-    */
+    var loginButton = document.getElementById('loginButton');
+    var logoutButton = document.getElementById('logoutButton');
 
-    /*   Simulate error message from the server   */
-    shakeModal();
+    var url = "http://localhost:47109/Account/Register";
+    const data = {
+        Login: document.getElementById('registerLogin').value,
+        Password: document.getElementById('registerPassword').value
+    };
+    console.log(JSON.stringify(data))
+    fetch(url, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (response.ok) {
+                loginButton.style.display = 'none';
+                logoutButton.style.display = '';
+                closeLoginModal();
+            } else {
+                response.json().then(data => shakeModal(data));
+            }
+        })
+        .catch(error => shakeModal(error));
 }
 
-function shakeModal() {
+function allCopletedExercises() {
+    var url = "http://localhost:47109/Activity/GetAllCompletedExercises";
+    var tbody = document.getElementById('exerciseTable');
+    fetch(url, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach((n, index) => {
+                console.log(n);
+                var row = document.createElement("TR");
+                var td1 = document.createElement("TD");
+                var td2 = document.createElement("TD");
+                var td3 = document.createElement("TD");
+                var td4 = document.createElement("TD");
+                var td5 = document.createElement("TD");
+                var td6 = document.createElement("TD");
+
+                td1.append(document.createTextNode(index+1));                
+                td2.append(document.createTextNode(n.exercise));
+                td3.append(document.createTextNode(n.expendedTime));
+                td4.append(document.createTextNode(n.distanceTraveled));
+                td5.append(document.createTextNode(n.expendedCalories));
+                td6.append(document.createTextNode(n.date));
+
+                row.append(td1,td2,td3,td4,td5,td6);
+                tbody.append(row);
+
+            })
+        })
+        .catch(error => alert(error));
+}
+
+function allExercises() {
+    var url = "http://localhost:47109/Activity/GetExercises";
+    var exercisesSelect = document.getElementById('exercisesSelect');
+    fetch(url, {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach((n, index) => {
+                exercisesSelect.appendChild(new Option(n.name, n.name));
+            })
+        })
+        .catch(error => alert(error));
+}
+
+function addCopletedExercise() {
+    var exercise = document.getElementById('exercisesSelect').value;
+    var date = document.getElementById('dateSelect').value;
+    var time = document.getElementById('expendedTime').value;
+    var distance = document.getElementById('distanceTraveled').value;
+
+    var url = "http://localhost:47109/Activity/AddCompletExercise";
+    const data = {
+        UserLogin: "ff",
+        Exercise: exercise,
+        Date: date,
+        ExpendedTime: time,
+        DistanceTraveled: distance,
+        ExpendedCalories: 0
+    };
+    console.log(JSON.stringify(data))
+    fetch(url, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log("ok");
+            } else {
+                response.json().then(data => console.log(data));
+            }
+        })
+        .catch(error => shakeModal(error));
+}
+
+
+function shakeModal(data) {
     $('#loginModal .modal-dialog').addClass('shake');
-    $('.error').addClass('alert alert-danger').html("Invalid email/password combination");
+    $('.error').addClass('alert alert-danger').html(data);
     $('input[type="password"]').val('');
     setTimeout(function () {
         $('#loginModal .modal-dialog').removeClass('shake');
@@ -85,32 +227,12 @@ function shakeModal() {
 
 
 $(document).ready(function () {
-    /*   Проверка авторизации   */
-
-    var loginButton = document.getElementById('loginButton');
-    var logoutButton = document.getElementById('logoutButton');
-
-    // var user = {
-    //     Login: "Juni",
-    //     Password: "2034329"
-    // };
-    // var json = JSON.stringify(user);
-    // var request = new XMLHttpRequest();
-    // request.open("POST", "http://localhost:47109/account/login");
-    // request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    // // request.onreadystatechange = function () {
-    // //     if (request.readyState == 4 && request.status == 200)
-    // //         document.getElementById("output").innerHTML = request.responseText;
-    // // }
-    // request.send(json);
-
-    // loginButton.onclick = function(){
-    //     loginButton.style.display = 'none';
-    //     logoutButton.style.display = '';
-    // }
-    // logoutButton.onclick = function(){
-    //     loginButton.style.display = '';
-    //     logoutButton.style.display = 'none';
-    // }
-    openLoginModal();
+        allCopletedExercises();
+        allExercises();
+        $("#exerciseInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#exerciseTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
 });

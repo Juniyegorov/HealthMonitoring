@@ -39,7 +39,7 @@
                                 <a class="btn" data-toggle="modal" href="javascript:void(0)" id="loginButton"
                                     onclick="openLoginModal();">Log in</a>
                                 <a class="btn" data-toggle="modal" href="javascript:void(0)" id="logoutButton"
-                                    style="display: none;" onclick="openRegisterModal();">Log out</a>
+                                    style="display: none;" onclick="logoutRequest();">Log out</a>
                             </div>
                         </div>
                     </ul>
@@ -50,29 +50,25 @@
     </header>
 
     <div class="tab-content">
-        <div class="tab-pane fade" id="activ">
+        <div class="tab-pane fade" id="activ" onclick="allCopletedExercises();">
             <div class="container">
-                <form method="post" asp-controller="Activity" asp-action="ActivitiesControl">
+                <form method="POST" action="javascript:void(0);" accept-charset="UTF-8" onsubmit="addCopletedExercise()">
                     <div class="row">
                         <div class="col-md-5">
                             <br />
                             Exercise:
-                            <select class="form-select" aria-label="select" name="Exercise" required>
+                            <select class="form-select" aria-label="select" name="Exercise" id="exercisesSelect" required>
                                 <option selected></option>
-                                <!-- @for (int i = 0; i < Model.Exercises.Count; i++)
-                                {
-                                    <option value="@Model.Exercises[i].Name">@Model.Exercises[i].Name</option>
-                                } -->
                             </select>
                             <div class="form-group">
                                 <label for="inputDate">Date:</label>
-                                <input type="date" class="form-control" name="Date" required>
+                                <input type="date" class="form-control" name="Date" id="dateSelect" required>
                             </div>
                             <label for="expendedTime" class="form-label">Expended time(min):</label>
                             <input type="number" class="form-control" id="expendedTime" required min="1"
                                 name="ExpendedTime">
                             <label for="distance" class="form-label">Distance(m):</label>
-                            <input type="number" class="form-control" name="DistanceTraveled" required min="1">
+                            <input type="number" class="form-control" name="DistanceTraveled" id="distanceTraveled" required min="1">
                         </div>
                         <div class="col-md-5">
                             <br />
@@ -83,8 +79,6 @@
                     <br />
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-                <!-- @if (Model.CompletedExercises.Count > 0)
-                { -->
                 <br />
                 <h2>All activities table</h2>
                 <p>Type something in the input field to search on table:</p>
@@ -101,21 +95,9 @@
                             <th scope="col">Date</th>
                         </tr>
                     </thead>
-                    <tbody id="exerciseTable">
-                        <!-- @for (int i = 0; i < Model.CompletedExercises.Count; i++)
-                            {
-                                <tr>
-                                    <th scope="row">@(i+1)</th>
-                                    <td>@Model.CompletedExercises[i].Exercise</td>
-                                    <td>@Model.CompletedExercises[i].ExpendedTime</td>
-                                    <td>@Model.CompletedExercises[i].DistanceTraveled</td>
-                                    <td>@Model.CompletedExercises[i].ExpendedCalories</td>
-                                    <td>@Model.CompletedExercises[i].Date.ToShortDateString()</td>
-                                </tr>
-                            } -->
+                    <tbody id="exerciseTable">                       
                     </tbody>
                 </table>
-                <!-- } -->
             </div>
         </div>
         <div class="tab-pane fade" id="food">
@@ -210,8 +192,8 @@
                             <div class="form">
                                 <form method="" html="{:multipart=>true}" data-remote="true" action=""
                                     accept-charset="UTF-8">
-                                    <input id="login" class="form-control" type="text" placeholder="Login" name="login">
-                                    <input id="password" class="form-control" type="password" placeholder="Password"
+                                    <input id="registerLogin" class="form-control" type="text" placeholder="Login" name="login">
+                                    <input id="registerPassword" class="form-control" type="password" placeholder="Password"
                                         name="password">
                                     <input class="btn btn-default btn-register" type="button" value="Create account"
                                         name="commit" onclick="registerRequest()">

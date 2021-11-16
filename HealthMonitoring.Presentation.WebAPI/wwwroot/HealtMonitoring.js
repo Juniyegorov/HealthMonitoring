@@ -217,7 +217,7 @@ function addCopletedExercise() {
 
 function allEatenDishes() {
     var url = "http://localhost:47109/Dish/GetAllEatenDishes";
-    var tbody = document.getElementById('exerciseTable');
+    var tbody = document.getElementById('dishesTable');
     fetch(url, {
         method: "GET",
         headers: {
@@ -229,24 +229,21 @@ function allEatenDishes() {
         .then(data => {
             data.forEach((n, index) => {
                 console.log(n);
-                //var row = document.createelement("tr");
-                //var td1 = document.createelement("td");
-                //var td2 = document.createelement("td");
-                //var td3 = document.createelement("td");
-                //var td4 = document.createelement("td");
-                //var td5 = document.createelement("td");
-                //var td6 = document.createelement("td");
+                var row = document.createelement("tr");
+                var td1 = document.createelement("td");
+                var td2 = document.createelement("td");
+                var td3 = document.createelement("td");
+                var td4 = document.createelement("td");
+                var td5 = document.createelement("td");
 
-                //td1.append(document.createtextnode(index + 1));
-                //td2.append(document.createtextnode(n.exercise));
-                //td3.append(document.createtextnode(n.expendedtime));
-                //td4.append(document.createtextnode(n.distancetraveled));
-                //td5.append(document.createtextnode(n.expendedcalories));
-                //td6.append(document.createtextnode(n.date));
+                td1.append(document.createtextnode(index + 1));
+                td2.append(document.createtextnode(n.name));
+                td3.append(document.createtextnode(n.weight));
+                td4.append(document.createtextnode(n.calories));
+                td5.append(document.createtextnode(n.date));
 
-                //row.append(td1, td2, td3, td4, td5, td6);
-                //tbody.append(row);
-
+                row.append(td1, td2, td3, td4, td5);
+                tbody.append(row);
             })
         })
         .catch(error => alert(error));

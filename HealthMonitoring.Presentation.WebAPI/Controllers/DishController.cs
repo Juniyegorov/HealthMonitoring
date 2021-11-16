@@ -44,5 +44,18 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
             var mapped = _mapper.Map<List<EatenDish>>(dishes);
             return Ok(mapped);
         }
+
+        [HttpPost]
+        public IActionResult AddEatenDish([FromBody] EatenDish model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userLogin = User.FindFirst(ClaimTypes.Name).Value;
+                var user = _userServices.GetUserInformation(userLogin);
+                _dishServices.EatenDish(model.Name, model.Weight, model.Date, user.Id);
+                return Ok();
+            }
+            return BadRequest(ModelState);
+        }
     }
 }

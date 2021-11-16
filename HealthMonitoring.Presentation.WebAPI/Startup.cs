@@ -35,6 +35,8 @@ namespace HealthMonitoring.Presentation.WebAPI
                );
             services.AddScoped<IExercisesService, ExercisesService>();
             services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IDishServices, DishServices>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }

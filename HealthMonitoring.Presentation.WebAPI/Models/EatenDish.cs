@@ -10,10 +10,13 @@ namespace HealthMonitoring.Presentation.WebAPI.Models
     {
         [Required]
         public string Name { get; set; }
+
         [Required]
         public int Weight { get; set; }
+
         [Required]
         public DateTime Date { get; set; }
+
         [Required]
         public int Calories { get; set; }
     }

@@ -18,10 +18,10 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
     public class AccountController : ControllerBase
     {
         private IUserServices _userServices;
-        private string _message;
-        public AccountController(IUserServices userServises)
+
+        public AccountController(IUserServices userServices)
         {
-            _userServices = userServises;
+            _userServices = userServices;
         }
         
         [HttpPost]
@@ -47,17 +47,20 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] LoginModel model)
         {
-            Action<string> action = AddMessageEror;
-            _userServices.RegisterUser(model.Login, model.Password, action);
-            if (_message == "Registration successful")
+            if (ModelState.IsValid)
             {
-                Authenticate(model.Login);
-                return Ok(_message);
+                var registerSuccessful = _userServices.RegisterUser(model.Login, model.Password);
+
+                if (registerSuccessful)
+                {
+                    Authenticate(model.Login);
+                    return Ok();
+                }
+
+                return BadRequest();
             }
-            else
-            {
-                return BadRequest(_message);
-            }
+
+            return BadRequest(ModelState);
         }
 
         [Authorize]
@@ -75,11 +78,6 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        }
-        private void AddMessageEror(string message)
-        {
-            ModelState.AddModelError("", message);
-            _message = message;
         }
     }
 }

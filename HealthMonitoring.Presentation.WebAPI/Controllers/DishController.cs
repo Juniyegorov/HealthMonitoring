@@ -55,6 +55,7 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
                 _dishServices.EatenDish(model.Name, model.Weight, model.Date, user.Id);
                 return Ok();
             }
+
             return BadRequest(ModelState);
         }
     }

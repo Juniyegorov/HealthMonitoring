@@ -35,7 +35,7 @@ namespace HealthMonitoring.DataAccessLayer.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-3P0S0LL;Database=HealthMonitoring;User Id=sa;Password=2034329;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=EGOROV-E\\WKAHU;Database=HealthMonitoring;User Id=sa;Password=2034329;Trusted_Connection=True;");
             }
         }
 

@@ -27,20 +27,19 @@ namespace HealthMonitoring.BusinessLogic.Services
             var mapper = config.CreateMapper();
             _mapper = mapper;
         }
-        public void RegisterUser(string login, string password, Action<string> action)
+
+        public bool RegisterUser(string login, string password)
         {
-            User user = new User() { Login = login, Password = password };
-            bool isUser = _userRepository.IsFindLogin(user);
+            bool isUser = _userRepository.IsFindLogin(login);
+
             if (!isUser)
             {
-                _userRepository.Add(user);
+                _userRepository.Add(login, password);
                 _healthMonitoringContext.SaveChanges();
-                action("Registration successful");
+                return true;
             }
-            else
-            {
-                action("This login is taken");
-            }            
+
+            return false;
         }
 
         public bool CheckUser(string login, string password)

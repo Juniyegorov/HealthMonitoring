@@ -19,6 +19,7 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
     {
         private IExercisesService _exercisesService;
         private IUserServices _userServices;
+
         public ActivityController(IExercisesService exercisesService, IUserServices userServices)
         {
             _exercisesService = exercisesService;
@@ -28,7 +29,7 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
         [HttpGet]
         public IActionResult GetExercises()
         {
-            var exercises = _exercisesService.GetAllExercises();            
+            var exercises = _exercisesService.GetAllExercises();
             return Ok(exercises);
         }
 
@@ -58,7 +59,8 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
                 _exercisesService.AddCompletedExercise(completedExercise);
                 return Ok();
             }
-                return BadRequest(ModelState);            
+
+            return BadRequest(ModelState);
         }
     }
 }

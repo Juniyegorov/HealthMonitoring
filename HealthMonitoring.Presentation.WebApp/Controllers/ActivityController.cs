@@ -18,6 +18,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
         private IExercisesService _exerciseService;
         private IUserServices _userServices;
         private CaloriesExpensesServices _caloriexExpensis;
+
         public ActivityController(IExercisesService exerciseService, IUserServices userServices, CaloriesExpensesServices caloriexExpensis)
         {
             _exerciseService = exerciseService;
@@ -31,6 +32,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
             var model = CreateExtendedExerciseViewModel();
             return View(model);
         }
+
         [HttpPost]
         public IActionResult ActivitiesControl(CompletedExerciseViewModel model)
         {
@@ -54,6 +56,7 @@ namespace HealthMonitoring.Presentation.WebApp.Controllers
             }
             return NoContent();
         }
+
         private ExtendedExerciseViewModel CreateExtendedExerciseViewModel()
         {
             var userLogin = User.FindFirst(ClaimTypes.Name).Value;

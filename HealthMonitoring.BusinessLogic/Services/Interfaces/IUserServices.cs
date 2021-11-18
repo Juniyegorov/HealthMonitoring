@@ -7,7 +7,7 @@ namespace HealthMonitoring.BusinessLogic.Services.Interfaces
 {
     public interface IUserServices
     {
-        void RegisterUser(string login, string password, Action<string> action);
+        bool RegisterUser(string login, string password);
         bool CheckUser(string login, string password);
         UserInformationModel GetUserInformation(string login);
         void SetUserInformation(UserInformationModel userInformationModel);

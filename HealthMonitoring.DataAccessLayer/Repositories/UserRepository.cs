@@ -16,13 +16,19 @@ namespace HealthMonitoring.DataAccessLayer.Repositories
         {
             _healthMonitoringContext = healthMonitoringContext;
         }
-        public void Add(User user)
+        public void Add(string login, string password)
         {
+            var user = new User
+            {
+                Login = login,
+                Password = password
+            };
+
             _healthMonitoringContext.Users.Add(user);
         }
-        public bool IsFindLogin(User user)
+        public bool IsFindLogin(string login)
         {
-            var selectUser = _healthMonitoringContext.Users.SingleOrDefault(u => u.Login == user.Login);
+            var selectUser = _healthMonitoringContext.Users.SingleOrDefault(u => u.Login == login);
             return selectUser != null;
         }
 

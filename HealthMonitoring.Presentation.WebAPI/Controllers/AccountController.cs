@@ -18,9 +18,10 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
     public class AccountController : ControllerBase
     {
         private IUserServices _userServices;
-        public AccountController(IUserServices userServises)
+
+        public AccountController(IUserServices userServices)
         {
-            _userServices = userServises;
+            _userServices = userServices;
         }
         
         [HttpPost]
@@ -40,8 +41,26 @@ namespace HealthMonitoring.Presentation.WebAPI.Controllers
             else
             {
                 return BadRequest(ModelState);
+            }            
+        }
+
+        [HttpPost]
+        public IActionResult Register([FromBody] LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var registerSuccessful = _userServices.RegisterUser(model.Login, model.Password);
+
+                if (registerSuccessful)
+                {
+                    Authenticate(model.Login);
+                    return Ok();
+                }
+
+                return BadRequest();
             }
-            
+
+            return BadRequest(ModelState);
         }
 
         [Authorize]

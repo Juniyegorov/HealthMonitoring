@@ -35,17 +35,23 @@ namespace HealthMonitoring.Presentation.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(LoginViewModel model)
         {
-            Action<string> action = AddMessageEror;
-            _userServices.RegisterUser(model.UserName, model.Password, action);
-            if (_message == "Registration successful")
+            if (ModelState.IsValid)
             {
-                await Authenticate(model.UserName);
-                return RedirectToAction("Index", "Home");
+                var registerSuccess = _userServices.RegisterUser(model.UserName, model.Password);
+                if (registerSuccess)
+                {
+                    await Authenticate(model.UserName);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "This login is taken");
+                    return View();
+                }
             }
-            else
-            {
-                return View();
-            }
+
+            return View();
+            
         }
 
         [HttpGet]
@@ -145,12 +151,6 @@ namespace HealthMonitoring.Presentation.Web.Controllers
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        }
-
-        private void AddMessageEror(string message)
-        {
-            ModelState.AddModelError("", message);
-            _message = message;
         }
     }
 }

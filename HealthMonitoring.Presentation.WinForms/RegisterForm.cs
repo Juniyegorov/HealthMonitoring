@@ -47,9 +47,16 @@ namespace HealthMonitoring.Presentation.WinForms
         {
             string login = _loginField.Text;
             string password = _passField.Text;
-            Action<string> action;
-            action = ShowMessage;
-            _userService.RegisterUser(login, password, action);
+            var registerSuccess = _userService.RegisterUser(login, password);
+
+            if (registerSuccess)
+            {
+                MessageBox.Show("Registration successful");
+            }
+            else
+            {
+                MessageBox.Show("This login is taken");
+            }
         }
         private void authorisationLabel_Click(object sender, EventArgs e)
         {
@@ -64,10 +71,6 @@ namespace HealthMonitoring.Presentation.WinForms
             {
                 register_Click(sender, e);
             }
-        }
-        private void ShowMessage(string message)
-        {
-            MessageBox.Show(message);
         }
     }
 }

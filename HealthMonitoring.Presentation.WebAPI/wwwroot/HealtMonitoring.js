@@ -147,14 +147,14 @@ function allCopletedExercises() {
                 var td5 = document.createElement("TD");
                 var td6 = document.createElement("TD");
 
-                td1.append(document.createTextNode(index+1));                
+                td1.append(document.createTextNode(index + 1));
                 td2.append(document.createTextNode(n.exercise));
                 td3.append(document.createTextNode(n.expendedTime));
                 td4.append(document.createTextNode(n.distanceTraveled));
                 td5.append(document.createTextNode(n.expendedCalories));
                 td6.append(document.createTextNode(n.date));
 
-                row.append(td1,td2,td3,td4,td5,td6);
+                row.append(td1, td2, td3, td4, td5, td6);
                 tbody.append(row);
 
             })
@@ -279,12 +279,14 @@ function shakeModal(data) {
 
 
 $(document).ready(function () {
-        allCopletedExercises();
-        allExercises();
-        $("#exerciseInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#exerciseTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+    allEatenDishes();
+    allDishes();
+    allCopletedExercises();
+    allExercises();
+    $("#exerciseInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#exerciseTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
+    });
 });
